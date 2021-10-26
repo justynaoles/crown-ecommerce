@@ -1,0 +1,55 @@
+.header {
+  height: 70px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  position: sticky;
+  top: 0;
+  left: 0;
+
+  .logo-container {
+    height: 100%;
+    width: 70px;
+    padding: 25px;
+  }
+
+  .options-container {
+    position: relative;
+  }
+
+  .options {
+    display: flex;
+    flex-flow: column;
+    padding: 20px;
+    background-color: #FFF;
+    width: 80vw;
+    position: absolute;
+    right: -9999px;
+    top: 70px;
+    height: fit-content;
+    transition: right .3s ease-in-out;
+
+    &.visible {
+      right: 0;
+    }
+
+    @media (min-width: 992px) {
+      flex-flow: row;
+      align-items: center;
+      justify-content: flex-end;
+      position: static;
+      padding: 0;
+    }
+
+    .option {
+      padding: 10px 15px;
+    }
+  }
+
+  .mobile-menu {
+    @media (min-width: 992px) {
+      display: none
+    }
+  }
+}
