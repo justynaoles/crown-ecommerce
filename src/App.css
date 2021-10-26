@@ -1,7 +1,7 @@
 *{box-sizing: border-box;}
 
 .App {
-  padding: 20px;
+  padding: 0 20px;
 }
 
 @media (min-width: 768px) {
