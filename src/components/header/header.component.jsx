@@ -64,7 +64,7 @@ class Header extends React.Component {
                         <Link className='option' to='/shop' onClick={this.closeMobileMenu}>SHOP</Link>
                         {
                             currentUser ?
-                            <div className='option' onClick={() => {auth.signOut(); this.closeMobileMenu()}}>SIGN OUT</div> 
+                            <div className='option' onClick={() => auth.signOut()}>SIGN OUT</div> 
                             : 
                             <Link className='option' to='/sign'  onClick={this.closeMobileMenu}>SIGN IN</Link>
                         }
