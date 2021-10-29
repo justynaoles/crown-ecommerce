@@ -1,0 +1,10 @@
+.form {
+    @media(min-width: 992px) {
+        width: 30%;
+    }
+}
+
+.button-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}

@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: center;
     border: 1px solid black;
-    margin: 0 7.5px 15px;
+    margin-bottom: 20px;
     position: relative;
     overflow: hidden;
 
@@ -26,6 +26,7 @@
   
     @media (min-width: 992px) {
       min-width: 30%;
+      margin: 0 20px 20px 20px;
     }
 
     &.large {

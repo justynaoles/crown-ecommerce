@@ -2,10 +2,9 @@ import React from 'react';
 import './sign.styles.scss';
 import SignIn from '../../components/sign-in/sign-in.component';
 
-const Sign = () => (
+const Sign = ({user}) => (
     <div className='sign-page'>
-        Sign page
-        <SignIn />
+        {user ? <h2>Hello {user.displayName}!</h2> : <SignIn />}
     </div>
 )
 
