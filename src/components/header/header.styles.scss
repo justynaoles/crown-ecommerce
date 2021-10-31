@@ -10,6 +10,10 @@
   padding: 35px 0;
   z-index: 2;
 
+  .options-container {
+    display: flex;
+  }
+
   .logo-container {
     height: 100%;
     width: 70px;
@@ -23,8 +27,8 @@
     background-color: #FFF;
     width: 80vw;
     position: fixed;
+    top: 100px;
     right: -100%;
-    top: 70px;
     min-height: 70vh;
     height: fit-content;
     transition: right .3s ease-in-out;
@@ -45,6 +49,7 @@
 
     .option {
       padding: 10px 15px;
+      list-style: none;
     }
   }
 

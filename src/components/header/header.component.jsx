@@ -4,6 +4,8 @@ import './header.styles.scss';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { auth } from '../../firebase/firebase.utils';
 import {connect} from 'react-redux';
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
 class Header extends React.Component {
     constructor(props){
@@ -44,7 +46,7 @@ class Header extends React.Component {
 
     render() {
         const {user} = this.props;
-            
+
         return (
             <header className='header'>
                 <Link to='/'>
@@ -62,20 +64,24 @@ class Header extends React.Component {
                             </span>
                     </button>
                     <ul className={'options' + (this.state.menuOpen ? ' visible' : '')}>
-                        <Link className='option' to='/shop' onClick={this.closeMobileMenu}>SHOP</Link>
+                        <li className='option'><Link className='' to='/shop' onClick={this.closeMobileMenu}>SHOP</Link></li>
                         {
                             user ?
-                            <div className='option' onClick={() => auth.signOut()}>SIGN OUT</div> 
+                            <li className='option' onClick={() => auth.signOut()}>SIGN OUT</li> 
                             : 
                             <Link className='option' to='/sign'  onClick={this.closeMobileMenu}>SIGN IN</Link>
                         }
                     </ul>
+                    <CartIcon />
+                    <CartDropdown />
                 </div>
             </header>
         )
     }
 }
 
+
+//get data from state about user
 const mapStateProps = state => ({
     user: state.user.currentUser
 });
