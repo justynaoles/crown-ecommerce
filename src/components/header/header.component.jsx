@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './header.styles.scss';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
-import { auth } from '../../firebase/firebase.utils'; 
+import { auth } from '../../firebase/firebase.utils';
+import {connect} from 'react-redux';
 
 class Header extends React.Component {
     constructor(props){
@@ -42,8 +43,8 @@ class Header extends React.Component {
       }
 
     render() {
-        const currentUser = this.props.user;
-    
+        const {user} = this.props;
+            
         return (
             <header className='header'>
                 <Link to='/'>
@@ -63,7 +64,7 @@ class Header extends React.Component {
                     <ul className={'options' + (this.state.menuOpen ? ' visible' : '')}>
                         <Link className='option' to='/shop' onClick={this.closeMobileMenu}>SHOP</Link>
                         {
-                            currentUser ?
+                            user ?
                             <div className='option' onClick={() => auth.signOut()}>SIGN OUT</div> 
                             : 
                             <Link className='option' to='/sign'  onClick={this.closeMobileMenu}>SIGN IN</Link>
@@ -75,5 +76,8 @@ class Header extends React.Component {
     }
 }
 
+const mapStateProps = state => ({
+    user: state.user.currentUser
+});
 
-export default Header;
+export default connect(mapStateProps)(Header);

@@ -2,6 +2,7 @@ import React from 'react';
 import './sign.styles.scss';
 import SignIn from '../../components/sign-in/sign-in.component';
 import SignUp from '../../components/sign-up/sign-up.component';
+import {connect} from 'react-redux';
 
 const Sign = ({user}) => (
     <div className='sign-page'>
@@ -9,4 +10,8 @@ const Sign = ({user}) => (
     </div>
 )
 
-export default Sign;
+const mapStateProps = state => ({
+    user: state.user.currentUser
+});
+
+export default connect(mapStateProps)(Sign);
