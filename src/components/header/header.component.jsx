@@ -6,36 +6,12 @@ import { auth } from '../../firebase/firebase.utils';
 import {connect} from 'react-redux';
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
+import {toggleMobileMenu, closeMobileMenu} from '../../redux/mobile-menu/mobile-menu.actions';
 
 class Header extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            menuOpen: false,
-            ariaExpanded: false,
-        }
-    }
-
-    handleMobileMenu = () => (
-        this.setState(prevState => ({
-            menuOpen: !prevState.menuOpen
-          })
-        )
-    );
-
-    closeMobileMenu = () => (
-        this.setState(prevState => ({
-            menuOpen: false
-          })
-        )
-    );
-
     updateDimensions = () => {
         if(window.innerWidth >= 992) {
-            this.setState(prevState => ({
-                menuOpen: false
-              })
-            )
+            this.props.closeMobileMenu();
         }
       };
 
@@ -45,35 +21,47 @@ class Header extends React.Component {
       }
 
     render() {
-        const {user} = this.props;
+        const {user, hidden, isAriaExpanded, isMobileMenuHidden, toggleMobileMenu, closeMobileMenu} = this.props;
 
         return (
             <header className='header'>
                 <Link to='/'>
-                    <Logo className='logo'  onClick={this.closeMobileMenu}/>
+                    <Logo 
+                        className='logo'
+                        onClick={closeMobileMenu}
+                    />
                 </Link>
                 <div className='options-container'>
                     <button 
-                        onClick={this.handleMobileMenu} 
-                        aria-expanded={this.state.menuOpen}
-                        className={'hamburger hamburger--spin mobile-menu' + (this.state.menuOpen ? ' is-active' : '')}
+                        onClick={toggleMobileMenu} 
+                        aria-expanded={isAriaExpanded}
+                        className={'hamburger hamburger--spin mobile-menu' + (isMobileMenuHidden ? '' :  ' is-active')}
                         type='button'
                         >
-                            <span className="hamburger-box">
-                                <span className="hamburger-inner"></span>
-                            </span>
+                        <span className="hamburger-box">
+                            <span className="hamburger-inner"></span>
+                        </span>
                     </button>
-                    <ul className={'options' + (this.state.menuOpen ? ' visible' : '')}>
-                        <li className='option'><Link className='' to='/shop' onClick={this.closeMobileMenu}>SHOP</Link></li>
+                    <ul 
+                        className={'options' + (isMobileMenuHidden ? '' : ' visible')}
+                    >
+                        <li className='option'><Link className='' to='/shop' 
+                        onClick={closeMobileMenu}
+                        >SHOP</Link></li>
                         {
                             user ?
                             <li className='option' onClick={() => auth.signOut()}>SIGN OUT</li> 
                             : 
-                            <Link className='option' to='/sign'  onClick={this.closeMobileMenu}>SIGN IN</Link>
+                            <Link className='option' to='/sign'  
+                            onClick={closeMobileMenu}
+                            >SIGN IN</Link>
                         }
                     </ul>
                     <CartIcon />
-                    <CartDropdown />
+                    {
+                        hidden ? null : <CartDropdown /> 
+                    }
+                
                 </div>
             </header>
         )
@@ -81,9 +69,18 @@ class Header extends React.Component {
 }
 
 
-//get data from state about user
-const mapStateProps = state => ({
-    user: state.user.currentUser
+//get data from state about user and cart basket
+const mapStateProps = ({user: { currentUser}, hidden: {hidden}, mobileMenu: {isMobileMenuHidden, isAriaExpanded}} ) => ({
+    user: currentUser,
+    hidden: hidden,
+    isMobileMenuHidden: isMobileMenuHidden,
+    isAriaExpanded: isAriaExpanded
 });
 
-export default connect(mapStateProps)(Header);
+//make action
+const mapDispatchToProps = (dispatch) => ({
+    toggleMobileMenu: () => dispatch(toggleMobileMenu()),
+    closeMobileMenu: () => dispatch(closeMobileMenu())
+});
+
+export default connect(mapStateProps, mapDispatchToProps)(Header);
