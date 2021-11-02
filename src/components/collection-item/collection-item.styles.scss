@@ -1,6 +1,7 @@
 .item-container {
   width: 100%;
   padding-bottom: 30px;
+  position: relative;
   @media (min-width: 768px) {
     width: 50%;
     padding: 0 20px 20px;
@@ -12,6 +13,30 @@
 
   @media (min-width: 1200px) {
     width: 25%;
+  }
+
+  .custom-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    opacity: 0;
+    display: none;
+  }
+
+  .image {
+    transition: filter .2s ease;
+  }
+
+  &:hover {
+    .image {
+      filter:opacity(.5)
+    }
+    .custom-button {
+      animation: fadeIn .2s linear;
+      opacity: 1;
+      display: block;
+    }
   }
 }
 
@@ -46,4 +71,10 @@
       width: 10%;
     }
   }
+}
+
+
+@keyframes fadeIn {
+  0% {opacity: 0}
+  100% {opacity: 1}
 }
