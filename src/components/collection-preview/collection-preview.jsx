@@ -6,7 +6,7 @@ const CollectionPreview = ({title, items}) => (
 
     <div className='collection-preview'> 
         <h2>{title}</h2>
-        <div className='preview'>
+        <ul className='preview'>
             {
                 items
                 .filter((item, index) => index < 4 )
@@ -14,7 +14,7 @@ const CollectionPreview = ({title, items}) => (
                     <CollectionItem key={item.id} item={item}/>
                 ))
             }
-        </div>
+        </ul>
     </div>
 );
 

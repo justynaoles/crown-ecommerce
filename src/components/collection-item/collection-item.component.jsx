@@ -7,8 +7,7 @@ import CustomButton from '../custom-button/custom-button.component';
 const CollectionItem = ({item, addItem}) => {
     const {name, imageUrl, price} = item;
     return (
-
-        <div className='item-container'>
+        <li className='item-container'>
             <div className='collection-item'>
                 <span className='image'
                     style={{backgroundImage: `url(${imageUrl})`}}
@@ -18,12 +17,11 @@ const CollectionItem = ({item, addItem}) => {
                     <span className='price'>{price}</span>
                 </div>
             </div>
-    
             <CustomButton onClick={() => addItem(item)}inverted>Add to cart</CustomButton>
-    
-        </div>
+        </li>
     )
 }
+
 
 //make action
 const mapDispatchToProps = (dispatch) => ({
