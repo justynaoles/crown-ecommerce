@@ -63,6 +63,7 @@ const mapStateProps = ({user}) => ({
   currentUser: user.currentUser
 });
 
+//action sign in sign out
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user)) 
 });

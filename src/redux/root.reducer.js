@@ -5,6 +5,6 @@ import mobileMenuReducer from './mobile-menu/mobile-menu.reducer';
 
 export default combineReducers({
     user: userReducer,
-    hidden: cartReducer,
+    cart: cartReducer,
     mobileMenu: mobileMenuReducer
 })

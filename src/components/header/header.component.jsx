@@ -70,7 +70,7 @@ class Header extends React.Component {
 
 
 //get data from state about user and cart basket
-const mapStateProps = ({user: { currentUser}, hidden: {hidden}, mobileMenu: {isMobileMenuHidden, isAriaExpanded}} ) => ({
+const mapStateProps = ({user: { currentUser}, cart: {hidden}, mobileMenu: {isMobileMenuHidden, isAriaExpanded}} ) => ({
     user: currentUser,
     hidden: hidden,
     isMobileMenuHidden: isMobileMenuHidden,
