@@ -3,6 +3,7 @@ import './cart-icon.styles.scss';
 import { ReactComponent as IconBag } from '../../assets/icon-bag.svg';
 import { connect } from 'react-redux';
 import {toggleCartBasket} from '../../redux/cart/cart.actions';
+import { selectorCartItemsQuantity } from '../../redux/cart/cart.selectors';
 
 const CartIcon = ({toggleCartBasket, itemCount}) => (
     <button type='button' className='cart-icon' onClick={toggleCartBasket}>
@@ -12,10 +13,8 @@ const CartIcon = ({toggleCartBasket, itemCount}) => (
 )
 
 //get data about user
-const mapStateProps = ({cart: {cartItems}}) => ({
-    itemCount: cartItems.reduce((previousValue, currentValue) => {
-        return previousValue + currentValue.quantity;
-      },0)
+const mapStateProps = (state) => ({
+    itemCount: selectorCartItemsQuantity(state)
   });
 
 //make action
