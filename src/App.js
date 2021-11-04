@@ -7,19 +7,18 @@ import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import Sign from './pages/sign/sign.component';
+import Checkout from './pages/checkout/checkout.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils'; 
 import {connect} from 'react-redux';
 import setCurrentUser from './redux/user/user.action';
 import { hideCartBasket } from './redux/cart/cart.actions';
+import { selectorCurrentUser } from './redux/user/user.selectors';
 
 class App extends React.Component {
 
 
   bodyClick = (e) => {
-    console.log('body click', e.target);
-
     const { hideCartBasket } = this.props;
-
     const target = e.target;
     const cart = document.getElementsByClassName('cart-dropdown')[0];
     const cartBtn = document.getElementsByClassName('cart-icon')[0];
@@ -36,7 +35,7 @@ class App extends React.Component {
     
   componentDidMount() {
 
-    document.body.addEventListener('click', (e) => this.bodyClick(e));
+    document.addEventListener('click', (e) => this.bodyClick(e));
 
 
     //user sign in sign out
@@ -68,14 +67,15 @@ class App extends React.Component {
   }
 
   render() {
-    
+    const {user} = this.props;
     return (
       <div className="App">
         <Header/>
         <Switch>
           <Route exact path='/' component={HomePage}/>
           <Route path='/shop' component={ShopPage}/>
-          <Route exact path='/sign' render={() => this.props.currentUser ? (<Redirect to='/'/>) : (<Sign/>)} />
+          <Route exact path='/sign' render={() => user ? (<Redirect to='/'/>) : (<Sign/>)} />
+          <Route exact path='/checkout' component={Checkout}/>
         </Switch>
       </div>
     );
@@ -83,8 +83,8 @@ class App extends React.Component {
 }
 
 //get data about user
-const mapStateProps = ({user}) => ({
-  currentUser: user.currentUser
+const mapStateProps = (state) => ({
+  user: selectorCurrentUser(state),
 });
 
 //action sign in sign out, hidde basket cart

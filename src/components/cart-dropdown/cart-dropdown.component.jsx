@@ -1,10 +1,13 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import './cart-dropdown.styles.scss';
 import CustomButton from '../custom-button/custom-button.component';
 import CartItem from '../cart-item/cart-item.component';
+import { hideCartBasket } from '../../redux/cart/cart.actions';
+import { closeMobileMenu } from '../../redux/mobile-menu/mobile-menu.actions';
 
-const CartDropdown = ({cartItems}) => (
+const CartDropdown = ({cartItems, history, hideCartBasket, closeMobileMenu}) => (
     <div className='cart-dropdown hidden'>
         { cartItems.length < 1 ? <p>Your basket is empty, add something :)</p> : null}
         {
@@ -12,7 +15,7 @@ const CartDropdown = ({cartItems}) => (
                 <CartItem key={item.id} item={item}/>
             )
         }
-        <CustomButton>GO TO CHECKOUT</CustomButton>
+        <CustomButton  onClick={() => {history.push('/checkout'); hideCartBasket(); closeMobileMenu()}} >GO TO CHECKOUT</CustomButton>
     </div>
 )
 
@@ -22,4 +25,10 @@ const mapStateProps = ({cart: {cartItems}}) => ({
     cartItems
   });
 
-export default connect(mapStateProps)(CartDropdown);
+//make action
+const mapDispatchToProps = (dispatch) => ({
+    hideCartBasket: () => dispatch(hideCartBasket()),
+    closeMobileMenu: () => dispatch(closeMobileMenu())
+});
+
+export default withRouter(connect(mapStateProps, mapDispatchToProps)(CartDropdown));
