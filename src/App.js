@@ -10,12 +10,36 @@ import Sign from './pages/sign/sign.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils'; 
 import {connect} from 'react-redux';
 import setCurrentUser from './redux/user/user.action';
+import { hideCartBasket } from './redux/cart/cart.actions';
 
 class App extends React.Component {
+
+
+  bodyClick = (e) => {
+    console.log('body click', e.target);
+
+    const { hideCartBasket } = this.props;
+
+    const target = e.target;
+    const cart = document.getElementsByClassName('cart-dropdown')[0];
+    const cartBtn = document.getElementsByClassName('cart-icon')[0];
+
+
+    if(cart && cart !== target && !cart.contains(target) && cartBtn !== target && !cartBtn.contains(target) ) {
+      hideCartBasket();
+    }
+
+  };
+
 
   unsubscribeFromAuth = null;
     
   componentDidMount() {
+
+    document.body.addEventListener('click', (e) => this.bodyClick(e));
+
+
+    //user sign in sign out
       this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
 
         const {setCurrentUser} = this.props;
@@ -63,9 +87,10 @@ const mapStateProps = ({user}) => ({
   currentUser: user.currentUser
 });
 
-//action sign in sign out
+//action sign in sign out, hidde basket cart
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user)) 
+  setCurrentUser: user => dispatch(setCurrentUser(user)),
+  hideCartBasket: () => dispatch(hideCartBasket()) 
 });
 
 export default connect(mapStateProps, mapDispatchToProps)(App);
