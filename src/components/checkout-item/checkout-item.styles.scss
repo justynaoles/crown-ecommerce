@@ -23,7 +23,10 @@
   }
 
   .quantity {
-    padding-left: 20px;
+    .arrow {
+      background-color: transparent;
+      border: none;
+    }
   }
 
   .remove-button {
