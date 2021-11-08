@@ -18,11 +18,19 @@ export const selectorCartItems = createSelector(
 
 ) 
 
-
-//take a cartItems only and make calculation
+//take a cartItems only and make calculation quant
 export const selectorCartItemsQuantity = createSelector(
     [selectorCartItems],
     cartItems => cartItems.reduce((previousValue, currentValue) => {
         return previousValue + currentValue.quantity;
+      },0)
+)
+
+
+//take a cartItems only and make calculation total price
+export const selectorCartItemsTotalPrice = createSelector(
+    [selectorCartItems],
+    cartItems => cartItems.reduce((previousValue, currentValue) => {
+        return previousValue + currentValue.quantity * currentValue.price;
       },0)
 )

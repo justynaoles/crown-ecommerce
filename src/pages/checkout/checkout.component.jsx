@@ -1,10 +1,46 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './checkout.styles.scss';
+import { selectorCartItemsTotalPrice, selectorCartItems } from '../../redux/cart/cart.selectors';
+import CheckoutItem from '../../components/checkout-item/checkout-item.component';
 
-const Checkout = () => {
+const Checkout = ({totalPrice, cartItems}) => {
+
     return  ( 
-        <p>checkput page</p>
+        <section className='checkout-page'>
+            <header className='checkout-header'>
+                <div className='header-block'>
+                    <span>Product</span>
+                </div>
+                <div className='header-block'>
+                    <span>Description</span>
+                </div>
+                <div className='header-block'>
+                    <span>Quantity</span>
+                </div>
+                <div className='header-block'>
+                    <span>Price</span>
+                </div>
+                <div className='header-block'>
+                    <span>Remove</span>
+                </div>
+            </header>
+
+
+            {
+                cartItems.map(item => <CheckoutItem key={item.id} item={item}/>)
+            }
+
+            <div className='total'>${totalPrice}</div>
+
+        </section>
     ) 
 }
 
-export default Checkout;
+//get data about total price
+const mapStateProps = (state) => ({
+    totalPrice: selectorCartItemsTotalPrice(state),
+    cartItems: selectorCartItems(state)
+})
+
+export default connect(mapStateProps)(Checkout);
