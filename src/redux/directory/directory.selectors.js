@@ -1,11 +1,11 @@
 import { createSelector } from 'reselect';
 
-const selectorReducer = state => (
+const directoryReducer = state => (
     state.directory
 );
 
-export const selectorSections = createSelector(
-    [selectorReducer],
+export const directorySections = createSelector(
+    [directoryReducer],
     directory => directory.sections
 );
 
