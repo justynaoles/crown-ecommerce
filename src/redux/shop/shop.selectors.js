@@ -11,5 +11,5 @@ export const shopCollections = createSelector(
 
 export const shopCategory = (param) => createSelector(
     [shopCollections],
-    category => category.find(item => item.routeName === param)
+    category => category[param]
 )
