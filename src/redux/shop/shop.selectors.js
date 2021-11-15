@@ -8,3 +8,8 @@ export const shopCollections = createSelector(
     [shopReducer],
     shop => shop.collections
 );
+
+export const shopCategory = (param) => createSelector(
+    [shopCollections],
+    category => category.find(item => item.routeName === param)
+)
