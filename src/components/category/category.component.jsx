@@ -1,7 +1,7 @@
 import React from 'react';
 import './category.styles.scss';
 import { connect } from 'react-redux';
-import { shopCollections, shopCategory } from '../../redux/shop/shop.selectors';
+import { shopCategory } from '../../redux/shop/shop.selectors';
 import CollectionItem from '../collection-item/collection-item.component';
 
 const Category = ({category}) => {

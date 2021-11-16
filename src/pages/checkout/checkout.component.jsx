@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import './checkout.styles.scss';
 import { selectorCartItemsTotalPrice, selectorCartItems } from '../../redux/cart/cart.selectors';
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
+import StripeCheckout from '../../components/stripe-checkout/stripe-checkout.component';
 
 const Checkout = ({totalPrice, cartItems}) => {
 
@@ -32,6 +33,7 @@ const Checkout = ({totalPrice, cartItems}) => {
             }
 
             <div className='total'>${totalPrice}</div>
+            <StripeCheckout price={totalPrice}/>
 
         </section>
     ) 
