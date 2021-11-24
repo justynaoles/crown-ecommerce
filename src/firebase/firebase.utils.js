@@ -48,15 +48,27 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 }
 
-export const addCollectionAndDocuments = (collectionKey, objectsToAdd) => {
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
   //create collection for example 'users', 'items'
   const collectionRef= firestore.collection(collectionKey);
-  console.log('colref',collectionRef);
+  const batch = firestore.batch();
+
+  objectsToAdd.forEach(object => {
+    //build in method to generate unique id
+    const newDocRef = collectionRef.doc();
+  
+    //set element in db via below method, arg: id and element
+    batch.set(newDocRef, object);
+  });
+
+  return await batch.commit();
 }
 
 firebase.initializeApp(config);
 
-export const auth = firebase.auth(); 
+export const auth = firebase.auth();
+
+//firestore element
 export const firestore = firebase.firestore();
 
 const provider = new firebase.auth.GoogleAuthProvider();
@@ -64,5 +76,30 @@ provider.setCustomParameters({
   prompt: 'select_account',
 });
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
+
+//get data collection (shop)
+export const collectionData = (collection) => {
+  const data = collection.map(doc => {
+
+    //.data() inbuilt method to get object form
+    const {title, items} = doc.data();
+
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      items,
+      title
+    }
+  });
+
+  //turn data (array) into object, we need  objects wchich represents categories, so we use reduce method
+  // instead of array [ {title: 'hats', items: []}, {title: 'jackets', items: []}] we have 1 object { hats: { items: []}, jackets: {items: []}} 
+  const arrayToObj = data.reduce((acumulator, data) => {
+    acumulator[data.title.toLowerCase()] = data;
+    return acumulator;
+  }, {});
+
+  return arrayToObj;
+}
 
 export default firebase;
