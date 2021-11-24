@@ -8,7 +8,7 @@ import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import {toggleMobileMenu, closeMobileMenu} from '../../redux/mobile-menu/mobile-menu.actions';
 import { selectorCurrentUser } from '../../redux/user/user.selectors';
-import { selectorHiddenCart } from '../../redux/cart/cart.selectors';
+import { selectorIsCartDropdownHidden } from '../../redux/cart-dropdown/cart-dropdown.selectors';
 import { selectorIsMobileMenuHidden, selectorIsAriaExpanded } from '../../redux/mobile-menu/mobile-menu.selectors';
 
 class Header extends React.Component {
@@ -24,8 +24,8 @@ class Header extends React.Component {
       }
 
     render() {
-        const {user, hidden, isAriaExpanded, isMobileMenuHidden, toggleMobileMenu, closeMobileMenu} = this.props;
-
+        const {user, cartHidden, isAriaExpanded, isMobileMenuHidden, toggleMobileMenu, closeMobileMenu} = this.props;
+        
         return (
             <header className='header'>
                 <Link to='/'>
@@ -62,9 +62,10 @@ class Header extends React.Component {
                     </ul>
                     <CartIcon />
                     {
-                        hidden ? null : <CartDropdown /> 
+                        cartHidden ? null :  <CartDropdown /> 
                     }
                 
+                    
                 </div>
             </header>
         )
@@ -82,7 +83,7 @@ class Header extends React.Component {
 
 const mapStateProps = (state) => ({
     user: selectorCurrentUser(state),
-    hidden: selectorHiddenCart(state),
+    cartHidden: selectorIsCartDropdownHidden(state),
     isMobileMenuHidden: selectorIsMobileMenuHidden(state),
     isAriaExpanded: selectorIsAriaExpanded(state)
 });

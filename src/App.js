@@ -8,24 +8,31 @@ import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import Sign from './pages/sign/sign.component';
 import Checkout from './pages/checkout/checkout.component';
-import { auth, createUserProfileDocument } from './firebase/firebase.utils'; 
+import { auth, createUserProfileDocument, addCollectionAndDocuments } from './firebase/firebase.utils'; 
 import {connect} from 'react-redux';
 import setCurrentUser from './redux/user/user.action';
-import { hideCartBasket } from './redux/cart/cart.actions';
+import { hideCartBasket } from './redux/cart-dropdown/cart-dropdown.actions';
 import { selectorCurrentUser } from './redux/user/user.selectors';
+import { shopCollectionsArr } from './redux/shop/shop.selectors';
+import {closeMobileMenu} from './redux/mobile-menu/mobile-menu.actions';
 
 class App extends React.Component {
 
 
   bodyClick = (e) => {
-    const { hideCartBasket } = this.props;
+    const { hideCartBasket, closeMobileMenu } = this.props;
     const target = e.target;
     const cart = document.getElementsByClassName('cart-dropdown')[0];
     const cartBtn = document.getElementsByClassName('cart-icon')[0];
-
+    const mobileMenu = document.getElementsByClassName('options')[0];
+    const mobileMenuBtn = document.getElementsByClassName('hamburger')[0];
 
     if(cart && cart !== target && !cart.contains(target) && cartBtn !== target && !cartBtn.contains(target) ) {
       hideCartBasket();
+    }
+
+    if(mobileMenu && mobileMenu !== target && !mobileMenu.contains(target) && mobileMenuBtn !== target && !mobileMenuBtn.contains(target) ) {
+     closeMobileMenu();
     }
 
   };
@@ -41,7 +48,7 @@ class App extends React.Component {
     //user sign in sign out
       this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
 
-        const {setCurrentUser} = this.props;
+        const {setCurrentUser, collectionArray} = this.props;
 
         //if user logged in
         if(userAuth) {
@@ -56,6 +63,7 @@ class App extends React.Component {
             })
           })
         }  else {
+          addCollectionAndDocuments('collection', collectionArray);
           setCurrentUser(userAuth);
         }
       
@@ -82,15 +90,17 @@ class App extends React.Component {
   }
 }
 
-//get data about user
+//get data about user and collection
 const mapStateProps = (state) => ({
   user: selectorCurrentUser(state),
+  collectionArray: shopCollectionsArr(state)
 });
 
 //action sign in sign out, hidde basket cart
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user)),
-  hideCartBasket: () => dispatch(hideCartBasket()) 
+  hideCartBasket: () => dispatch(hideCartBasket()),
+  closeMobileMenu: () => dispatch(closeMobileMenu())
 });
 
 export default connect(mapStateProps, mapDispatchToProps)(App);

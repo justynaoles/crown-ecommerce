@@ -2,7 +2,7 @@ import React from 'react';
 import './cart-icon.styles.scss';
 import { ReactComponent as IconBag } from '../../assets/icon-bag.svg';
 import { connect } from 'react-redux';
-import {toggleCartBasket} from '../../redux/cart/cart.actions';
+import {toggleCartBasket} from '../../redux/cart-dropdown/cart-dropdown.actions';
 import { selectorCartItemsQuantity } from '../../redux/cart/cart.selectors';
 
 const CartIcon = ({toggleCartBasket, itemCount}) => (

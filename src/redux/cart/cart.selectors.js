@@ -5,12 +5,6 @@ const selectorCart = state => (
     state.cart
 )
 
-//take a state only card part and take only hidden value
-export const selectorHiddenCart = createSelector(
-    [selectorCart],
-    cart => cart.hidden
-)
-
 //take a state with only card part and take only cartItems from cart
 export const selectorCartItems = createSelector(
     [selectorCart],

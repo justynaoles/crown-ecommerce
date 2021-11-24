@@ -1,14 +1,14 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import './cart-dropdown.styles.scss';
+import styles from './cart-dropdown.module.scss';
 import CustomButton from '../custom-button/custom-button.component';
 import CartItem from '../cart-item/cart-item.component';
-import { hideCartBasket } from '../../redux/cart/cart.actions';
+import { hideCartBasket } from '../../redux/cart-dropdown/cart-dropdown.actions';
 import { closeMobileMenu } from '../../redux/mobile-menu/mobile-menu.actions';
 
 const CartDropdown = ({cartItems, history, hideCartBasket, closeMobileMenu}) => (
-    <div className='cart-dropdown hidden'>
+    <div className={`${styles.cartDropdown} ${styles.hidden} cart-dropdown`}>
         { cartItems.length < 1 ? <p>Your basket is empty, add something :)</p> : null}
         {
             cartItems.map(item => 
