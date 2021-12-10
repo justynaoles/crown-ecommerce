@@ -5,16 +5,25 @@ import { shopCollectionsArr } from '../../redux/shop/shop.selectors';
 import CollectionPreview from '../collection-preview/collection-preview';
 
 
-const ShopOverview = ({collectionsArray}) => (
+const ShopOverview = ({collectionsArray}) => {
+    
+    return(
+        collectionsArray ?
 
-    <div className='shop-overview'>
+        <div className='shop-overview'>
         {
             collectionsArray.map(({id, ...otherCollectionsProps}) => (
                 <CollectionPreview key={id} {...otherCollectionsProps}/>
             ))
         }
-    </div>
-)
+        </div>
+
+        :
+
+        <h1>no data, sorry</h1>
+    )
+
+}
 
 const mapStateProps = createStructuredSelector({
     collectionsArray: shopCollectionsArr

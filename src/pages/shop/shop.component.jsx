@@ -6,11 +6,18 @@ import Category from '../../components/category/category.component';
 import { firestore, collectionData } from '../../firebase/firebase.utils';
 import { connect } from 'react-redux';
 import {updateCollection} from '../../redux/shop/shop.actions';
+import Spinner from '../../components/spinner/spinner.component';
+
+const ShopOverViewSpinner = Spinner(ShopOverview);
+const CategoryWithSpiner = Spinner(Category);
 
 class ShopPage extends React.Component {
 
-    componentDidMount() {
+    state = {
+        loading: true
+    }
 
+    componentDidMount() {
 
         const {updateCollection} = this.props;
 
@@ -24,15 +31,28 @@ class ShopPage extends React.Component {
             updateCollection(collectionMap);
 
         });
+
+        this.setState({
+            loading: false
+        })
     }
 
     render() {
         const {match} = this.props;
+        const {loading} = this.state;
 
         return (
             <div className='shop-page'>
-                <Route exact path={`${match.path}`} component={ShopOverview}/>
-                <Route exact path={`${match.path}/:categoryId`} component={Category}/>
+                {/* <Route exact path={`${match.path}`} component={ShopOverview}/>
+                <Route exact path={`${match.path}/:categoryId`} component={Category}/> */}
+
+
+                <Route exact path={`${match.path}`} render={ props => (
+                    <ShopOverViewSpinner isLoading={loading} {...props}/>
+                )}/>
+                <Route exact path={`${match.path}/:categoryId`} render={props => (
+                    <CategoryWithSpiner isLoading={loading} {...props}/>
+                )}/>
             </div>
         )
     }

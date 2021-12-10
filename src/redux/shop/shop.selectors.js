@@ -11,10 +11,10 @@ export const shopCollections = createSelector(
 
 export const shopCollectionsArr = createSelector(
     shopCollections,
-    shopCollectionsArr => Object.keys(shopCollectionsArr).map(key => shopCollectionsArr[key])
+    shopCollectionsArr => shopCollectionsArr ? Object.keys(shopCollectionsArr).map(key => shopCollectionsArr[key]) : []
 )
 
 export const shopCategory = (param) => createSelector(
     [shopCollections],
-    category => category[param]
+    category => category ? category[param] : null
 )
