@@ -37,8 +37,6 @@ class ShopPage extends React.Component {
         this.setState({
             loading: false
         })
-
-        console.log('shop componenet');
     }
 
     render() {
