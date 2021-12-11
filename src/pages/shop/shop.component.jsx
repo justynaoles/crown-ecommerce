@@ -30,11 +30,15 @@ class ShopPage extends React.Component {
 
             updateCollection(collectionMap);
 
+        }).catch(error => {
+            console.log('error', error);
         });
 
         this.setState({
             loading: false
         })
+
+        console.log('shop componenet');
     }
 
     render() {
