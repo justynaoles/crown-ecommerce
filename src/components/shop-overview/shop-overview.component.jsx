@@ -6,8 +6,6 @@ import CollectionPreview from '../collection-preview/collection-preview';
 
 
 const ShopOverview = ({collectionsArray}) => {
-
-    console.log('shopoveriew', collectionsArray);
     return(
         collectionsArray ?
 

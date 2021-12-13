@@ -51,6 +51,10 @@ class Header extends React.Component {
                         <li className='option'><Link className='' to='/shop' 
                         onClick={closeMobileMenu}
                         >SHOP</Link></li>
+                        
+                        <li className='option'><Link className='' to='/opinions' 
+                        onClick={closeMobileMenu}
+                        >Opinions</Link></li>
                         {
                             user ?
                             <li className='option' onClick={() => auth.signOut()}>SIGN OUT</li> 

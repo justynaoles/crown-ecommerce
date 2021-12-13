@@ -5,6 +5,7 @@ import 'normalize.css';
 import '../node_modules/hamburgers/dist/hamburgers.min.css';
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
+import opinionsPage from './pages/opinions/opinions.component';
 import Header from './components/header/header.component';
 import Sign from './pages/sign/sign.component';
 import Checkout from './pages/checkout/checkout.component';
@@ -79,6 +80,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={HomePage}/>
           <Route path='/shop' component={ShopPage}/>
+          <Route path='/opinions' component={opinionsPage}/>
           <Route exact path='/sign' render={() => user ? (<Redirect to='/'/>) : (<Sign/>)} />
           <Route exact path='/checkout' component={Checkout}/>
         </Switch>
