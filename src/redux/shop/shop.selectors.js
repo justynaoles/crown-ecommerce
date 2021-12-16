@@ -18,3 +18,8 @@ export const shopCategory = (param) => createSelector(
     [shopCollections],
     category => category ? category[param] : null
 )
+
+export const isFetchingSelector = createSelector (
+    shopCollections,
+    shopCollections => shopCollections.isFetchingCollection
+)
