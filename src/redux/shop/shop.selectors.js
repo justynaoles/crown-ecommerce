@@ -20,6 +20,6 @@ export const shopCategory = (param) => createSelector(
 )
 
 export const isFetchingSelector = createSelector (
-    shopCollections,
-    shopCollections => shopCollections.isFetchingCollection
+    [shopReducer],
+    shop => shop.isFetchingCollection
 )

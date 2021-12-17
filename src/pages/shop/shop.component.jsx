@@ -21,6 +21,8 @@ class ShopPage extends React.Component {
     render() {
         const {isFetchingSelector, match} = this.props;
 
+        console.log(match, 'match');
+
         return (
             <div className='shop-page'>
                 {/* <Route exact path={`${match.path}`} component={ShopOverview}/>
