@@ -5,8 +5,6 @@ import CollectionItem from '../collection-item/collection-item.component';
 import { Link } from "react-router-dom";
 
 const CollectionPreview = ({title, items, history, match, routeName}) => {
-
-    console.log('match', match, history);
     return (
 
         <div className='collection-preview'>

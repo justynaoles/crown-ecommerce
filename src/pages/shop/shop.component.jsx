@@ -1,15 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import './shop.styles.scss';
-import ShopOverview from './../../components/shop-overview/shop-overview.component';
-import Category from '../../components/category/category.component';
 import { connect } from 'react-redux';
 import {fetchCollectionsAsync} from '../../redux/shop/shop.actions';
-import Spinner from '../../components/spinner/spinner.component';
-import { isFetchingSelector } from '../../redux/shop/shop.selectors';
-
-const ShopOverViewSpinner = Spinner(ShopOverview);
-const CategoryWithSpiner = Spinner(Category);
+import {CollectionPreviewContainer} from '../../components/collection-preview/collection-container-preview';
+import CategoryContainer from '../../components/category/category-container';
 
 class ShopPage extends React.Component {
 
@@ -19,35 +14,35 @@ class ShopPage extends React.Component {
     }
 
     render() {
-        const {isFetchingSelector, match} = this.props;
-
-        console.log(match, 'match');
+        const {match} = this.props;
 
         return (
             <div className='shop-page'>
                 {/* <Route exact path={`${match.path}`} component={ShopOverview}/>
                 <Route exact path={`${match.path}/:categoryId`} component={Category}/> */}
 
-
+                {/* element extracted into container collecetion preview container 
                 <Route exact path={`${match.path}`} render={ props => (
                     <ShopOverViewSpinner isLoading={isFetchingSelector} {...props}/>
-                )}/>
-                <Route exact path={`${match.path}/:categoryId`} render={props => (
+                )}/> */}
+
+                
+                <Route exact path={`${match.path}`} component={CollectionPreviewContainer}/>
+
+                {/* <Route exact path={`${match.path}/:categoryId`} render={props => (
                     <CategoryWithSpiner isLoading={isFetchingSelector} {...props}/>
-                )}/>
+                )}/> */}
+
+                <Route exact path={`${match.path}/:categoryId`} component={CategoryContainer}/>
             </div>
         )
     }
 }
 
-//get data
-const mapStateProps = (state) => ({
-    isFetchingSelector: isFetchingSelector(state),
-});
 
 //make action
 const mapDispatchToProps = (dispatch) => ({
     fetchCollectionsAsync: () => dispatch(fetchCollectionsAsync()),
 });
 
-export default connect(mapStateProps, mapDispatchToProps)(ShopPage);
+export default connect(null, mapDispatchToProps)(ShopPage);
