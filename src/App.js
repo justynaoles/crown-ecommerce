@@ -9,9 +9,8 @@ import opinionsPage from './pages/opinions/opinions.component';
 import Header from './components/header/header.component';
 import Sign from './pages/sign/sign.component';
 import Checkout from './pages/checkout/checkout.component';
-import { auth, createUserProfileDocument } from './firebase/firebase.utils'; 
 import {connect} from 'react-redux';
-import setCurrentUser from './redux/user/user.action';
+import {setCurrentUser} from './redux/user/user.action';
 import { hideCartBasket } from './redux/cart-dropdown/cart-dropdown.actions';
 import { selectorCurrentUser } from './redux/user/user.selectors';
 import { shopCollectionsArr } from './redux/shop/shop.selectors';
@@ -38,34 +37,10 @@ class App extends React.Component {
 
   };
 
-
   unsubscribeFromAuth = null;
     
   componentDidMount() {
     document.addEventListener('click', (e) => this.bodyClick(e));
-    //user sign in sign out
-      this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-        const {setCurrentUser} = this.props;
-        //if user logged in
-        if(userAuth) {
-          //we check if there is record for user in DB
-          const userRef = await createUserProfileDocument(userAuth);
-          userRef.onSnapshot( snapShot => {
-            setCurrentUser({
-                id: snapShot.id,
-                ...snapShot.data()
-            })
-          })
-        }  else {
-          // addCollectionAndDocuments('collection', collectionArray);
-          setCurrentUser(userAuth);
-        }
-        // addCollectionAndDocuments('collection', collectionArray);
-        //destructure data, we need only title and items in out db, no need to keep 'route'
-        // addCollectionAndDocuments('collection', collectionArray.map(({items, title}) => ({items, title})));
-        //comment above code, no more need, we set collections only one time
-      
-      });
     }
 
   componentWillUnmount(){
