@@ -68,6 +68,17 @@ firebase.initializeApp(config);
 
 export const auth = firebase.auth();
 
+//check user persistance utils
+export const getCurrentUser = () => {
+
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      unsubscribe();
+      resolve(userAuth)
+    }, reject);
+  })
+}
+
 //firestore element
 export const firestore = firebase.firestore();
 

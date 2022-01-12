@@ -10,7 +10,7 @@ import Header from './components/header/header.component';
 import Sign from './pages/sign/sign.component';
 import Checkout from './pages/checkout/checkout.component';
 import {connect} from 'react-redux';
-import {setCurrentUser} from './redux/user/user.action';
+import {setCurrentUser, checkUserSession} from './redux/user/user.action';
 import { hideCartBasket } from './redux/cart-dropdown/cart-dropdown.actions';
 import { selectorCurrentUser } from './redux/user/user.selectors';
 import { shopCollectionsArr } from './redux/shop/shop.selectors';
@@ -40,6 +40,10 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
     
   componentDidMount() {
+
+    const { checkUserSession } = this.props;
+
+    checkUserSession();
     document.addEventListener('click', (e) => this.bodyClick(e));
     }
 
@@ -73,6 +77,7 @@ const mapStateProps = (state) => ({
 //action sign in sign out, hidde basket cart
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user)),
+  checkUserSession: () => dispatch(checkUserSession()),
   hideCartBasket: () => dispatch(hideCartBasket()),
   closeMobileMenu: () => dispatch(closeMobileMenu())
 });
