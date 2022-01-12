@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './header.styles.scss';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
-import { auth } from '../../firebase/firebase.utils';
 import {connect} from 'react-redux';
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
@@ -10,6 +9,7 @@ import {toggleMobileMenu, closeMobileMenu} from '../../redux/mobile-menu/mobile-
 import { selectorCurrentUser } from '../../redux/user/user.selectors';
 import { selectorIsCartDropdownHidden } from '../../redux/cart-dropdown/cart-dropdown.selectors';
 import { selectorIsMobileMenuHidden, selectorIsAriaExpanded } from '../../redux/mobile-menu/mobile-menu.selectors';
+import { signOutStart} from '../../redux/user/user.action'
 
 class Header extends React.Component {
     updateDimensions = () => {
@@ -24,7 +24,7 @@ class Header extends React.Component {
       }
 
     render() {
-        const {user, cartHidden, isAriaExpanded, isMobileMenuHidden, toggleMobileMenu, closeMobileMenu} = this.props;
+        const {user, cartHidden, isAriaExpanded, isMobileMenuHidden, toggleMobileMenu, closeMobileMenu, signOutStart} = this.props;
         
         return (
             <header className='header'>
@@ -57,7 +57,7 @@ class Header extends React.Component {
                         >Opinions</Link></li>
                         {
                             user ?
-                            <li className='option' onClick={() => auth.signOut()}>SIGN OUT</li> 
+                            <li className='option' onClick={signOutStart}>SIGN OUT</li> 
                             : 
                             <Link className='option' to='/sign'  
                             onClick={closeMobileMenu}
@@ -95,7 +95,8 @@ const mapStateProps = (state) => ({
 //make action
 const mapDispatchToProps = (dispatch) => ({
     toggleMobileMenu: () => dispatch(toggleMobileMenu()),
-    closeMobileMenu: () => dispatch(closeMobileMenu())
+    closeMobileMenu: () => dispatch(closeMobileMenu()),
+    signOutStart: () => dispatch(signOutStart())
 });
 
 export default connect(mapStateProps, mapDispatchToProps)(Header);
