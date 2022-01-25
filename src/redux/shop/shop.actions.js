@@ -28,9 +28,7 @@ export const fetchCollectionsAsync = () => {
             const snapShotCollection = snapShot.docs;
             const collectionMap = collectionData(snapShotCollection);
 
-            // updateCollection(collectionMap);
-
-            console.log(collectionMap, 'collection');
+            // updateCollection(collectionMap)
 
             dispatch(fetchCollectionsSucces(collectionMap));
 
