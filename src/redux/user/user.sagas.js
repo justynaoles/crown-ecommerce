@@ -107,13 +107,22 @@ export function* signUp ({payload: {email, password, displayName}}) {
     }
 }
 
-export function* signUpSuccessAfter( { user, additionalData: { displayName }} ){
+export function* signUpSuccessAfter({ payload: { user, additionalData } } ){
 
     try {
-        console.log('user: ', user, 'display name: ',displayName )
-    } catch {
-
-    }
+        const userRef = yield call(
+          createUserProfileDocument,
+          user,
+          additionalData
+        );
+        const userSnapshot = yield userRef.get();
+        yield put(emailSignInSuccess({
+            id: userSnapshot.id,
+            ...userSnapshot.data()
+        }));
+      } catch (error) {
+        yield put(emailSignInFailure(error))
+      }
 }
 
 export function* onSignUp() {

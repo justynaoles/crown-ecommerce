@@ -1,43 +1,32 @@
 import React from 'react';
+import { useState } from 'react';
 import {connect} from 'react-redux';
 import './sign-up.styles.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 import {signUpStart} from '../../redux/user/user.action';
 
-class SignUp extends React.Component {
-
-    constructor(){
-        super();
-        this.state = {
-            displayName: '',
-            email: '',
-            password: '',
-            confirmPassword: ''
-        }
-    }
+const SignUp = ({signUpStart}) => {
 
 
-    handleChange = (e) => {
+    const [credentials, setCredentials] = useState({
+        displayName: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    });
 
+   const handleChange = (e) => {
         const {value, name } = e.target;
-
-        this.setState({[name] : value});
+        setCredentials({...credentials,[name] : value});
 
     }
 
-    handleSubmit = async e => {
+   const handleSubmit = async e => {
         e.preventDefault();
 
-        const {displayName, email, password, confirmPassword} = this.state;
-
-        const {signUpStart} = this.props;
-
-
-        console.log('sign up process')
-
-
+        const {displayName, email, password, confirmPassword} = credentials;
+       
         //check if passwords match, currently basic validation
         if(password !== confirmPassword) {
             alert('Your passwords dont match');
@@ -46,18 +35,9 @@ class SignUp extends React.Component {
 
         try {
 
-            console.log('dp', displayName)
-
             signUpStart(email, password, displayName);
 
-            //destructure state data
-            // const { user }  = await auth.createUserWithEmailAndPassword(email, password);
-
-            //parameter user comes from  above, displayName comes from state destructure (current function)
-            // await createUserProfileDocument(user, {displayName});
-
-            //when everything ok we clear form
-            this.setState({
+            setCredentials({
                 displayName: '',
                 email: '',
                 password: '',
@@ -69,26 +49,21 @@ class SignUp extends React.Component {
         }
 
     }
-
-
-    render () {
         return(
             <div className='sign-up'>
                 <h2 className=''>I do not have an account yet</h2>
                 <p>Please sign up with your email and password</p>
-                <form className='form' onSubmit={this.handleSubmit}>
-                    <FormInput type='text' name='displayName' label='name' value={this.state.displayName} handleChange={this.handleChange} required/>
-                    <FormInput type='email' name='email' label='email' value={this.state.email} handleChange={this.handleChange} required/>
-                    <FormInput type='password' name='password' label='password' value={this.state.password} handleChange={this.handleChange} required/>
-                    <FormInput type='password' name='confirmPassword' label='confirm password' value={this.state.confirmPassword} handleChange={this.handleChange} required/>
+                <form className='form' onSubmit={handleSubmit}>
+                    <FormInput type='text' name='displayName' label='name' value={credentials.displayName} handleChange={handleChange} required/>
+                    <FormInput type='email' name='email' label='email' value={credentials.email} handleChange={handleChange} required/>
+                    <FormInput type='password' name='password' label='password' value={credentials.password} handleChange={handleChange} required/>
+                    <FormInput type='password' name='confirmPassword' label='confirm password' value={credentials.confirmPassword} handleChange={handleChange} required/>
                     <div className='button-wrapper'>
                         <CustomButton type='submit'>Sign up</CustomButton>
                     </div>
                 </form>
-
             </div>
         );
-    }
 }
 
 //make action
