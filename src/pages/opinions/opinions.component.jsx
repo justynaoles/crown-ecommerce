@@ -21,7 +21,7 @@ function OpinionsPage() {
     return (
         <>
         <Opinions dataUrl='https://jsonplaceholder.typicode.com/posts'/>
-        <Comments dataUrl='https://jsonplaceholder.typicode.com/comments'/>
+        <Comments dataUrl='https://jsonplaceholder.typicode.com/comments'/> 
         <button onClick={() => setButtonClick(buttonClick + 1)}>Click to increase</button>
         <p>{count}</p>
         </>

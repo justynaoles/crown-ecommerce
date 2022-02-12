@@ -10,6 +10,8 @@ import CategoryContainer from '../../components/category/category-container';
 const ShopPage = ({fetchCollectionsStart, match}) => {
 
     useEffect(()=> {
+
+        fetchCollectionsStart();
         
     },[fetchCollectionsStart]);
 

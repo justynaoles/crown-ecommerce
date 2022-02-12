@@ -1,8 +1,8 @@
 import React from 'react';
 import withData from './../../hoc/with-data';
 
-
 const Opinions = ({data}) =>    {
+
     return (
         <section>
         <h1>Opinions</h1>
