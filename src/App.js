@@ -1,22 +1,27 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { Switch, Route, Redirect} from 'react-router-dom';
 import './App.css';
 import 'normalize.css';
 import '../node_modules/hamburgers/dist/hamburgers.min.css';
-import HomePage from './pages/homepage/homepage.component';
-import ShopPage from './pages/shop/shop.component';
-import opinionsPage from './pages/opinions/opinions.component';
-import Comments from './pages/comments/comments.component';
+
+
+
+import Loader from './components/loader/loader.component';
 import Header from './components/header/header.component';
-import Sign from './pages/sign/sign.component';
-import Checkout from './pages/checkout/checkout.component';
 import {connect} from 'react-redux';
 import {setCurrentUser, checkUserSession} from './redux/user/user.action';
 import { hideCartBasket } from './redux/cart-dropdown/cart-dropdown.actions';
 import { selectorCurrentUser } from './redux/user/user.selectors';
 import { shopCollectionsArr } from './redux/shop/shop.selectors';
 import {closeMobileMenu} from './redux/mobile-menu/mobile-menu.actions';
+
+const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
+const ShopPage = lazy(() => import('./pages/shop/shop.component'));
+const OpinionsPage = lazy(() => import('./pages/opinions/opinions.component'));
+const Comments = lazy(() => import('./pages/comments/comments.component'));
+const Sign = lazy(() => import('./pages/sign/sign.component'));
+const Checkout =  lazy(() => import('./pages/checkout/checkout.component'));
 
 const App = ({setCurrentUser, checkUserSession, hideCartBasket, closeMobileMenu}) => {
 
@@ -49,12 +54,14 @@ const App = ({setCurrentUser, checkUserSession, hideCartBasket, closeMobileMenu}
     <div className="App">
       <Header/>
       <Switch>
+        <Suspense fallback={<Loader />}>
         <Route exact path='/' component={HomePage}/>
-        <Route path='/shop' component={ShopPage}/>
-        <Route path='/opinions' component={opinionsPage}/>
-        <Route path='/comments' component={Comments}/>
-        <Route exact path='/sign' render={() => user ? (<Redirect to='/'/>) : (<Sign/>)} />
-        <Route exact path='/checkout' component={Checkout}/>
+          <Route path='/shop' component={ShopPage}/>
+          <Route path='/opinions' component={OpinionsPage}/>
+          <Route path='/comments' component={Comments}/>
+          <Route exact path='/sign' render={() => user ? (<Redirect to='/'/>) : (<Sign/>)} />
+          <Route exact path='/checkout' component={Checkout}/>
+        </Suspense>
       </Switch>
     </div>
     );
