@@ -59,6 +59,10 @@ class Header extends React.Component {
                         <li className='option'><Link className='' to='/comments' 
                         onClick={closeMobileMenu}
                         >Comments</Link></li>
+
+                        <li className='option'><Link className='' to='/style-guid' 
+                        onClick={closeMobileMenu}
+                        >Style guid</Link></li>
                         {
                             user ?
                             <li className='option' onClick={signOutStart}>SIGN OUT</li> 

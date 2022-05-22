@@ -15,6 +15,7 @@ import { hideCartBasket } from './redux/cart-dropdown/cart-dropdown.actions';
 import { selectorCurrentUser } from './redux/user/user.selectors';
 import { shopCollectionsArr } from './redux/shop/shop.selectors';
 import {closeMobileMenu} from './redux/mobile-menu/mobile-menu.actions';
+import ErrorBoundary from './components/error-boundary/error-boundary.component';
 
 const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
 const ShopPage = lazy(() => import('./pages/shop/shop.component'));
@@ -22,6 +23,7 @@ const OpinionsPage = lazy(() => import('./pages/opinions/opinions.component'));
 const Comments = lazy(() => import('./pages/comments/comments.component'));
 const Sign = lazy(() => import('./pages/sign/sign.component'));
 const Checkout =  lazy(() => import('./pages/checkout/checkout.component'));
+const StyleGuid = lazy(() => import('./pages/style-guid/style-guid.component'));
 
 const App = ({setCurrentUser, checkUserSession, hideCartBasket, closeMobileMenu}) => {
 
@@ -54,14 +56,17 @@ const App = ({setCurrentUser, checkUserSession, hideCartBasket, closeMobileMenu}
     <div className="App">
       <Header/>
       <Switch>
-        <Suspense fallback={<Loader />}>
-        <Route exact path='/' component={HomePage}/>
-          <Route path='/shop' component={ShopPage}/>
-          <Route path='/opinions' component={OpinionsPage}/>
-          <Route path='/comments' component={Comments}/>
-          <Route exact path='/sign' render={() => user ? (<Redirect to='/'/>) : (<Sign/>)} />
-          <Route exact path='/checkout' component={Checkout}/>
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<Loader />}>
+            <Route exact path='/' component={HomePage}/>
+            <Route path='/shop' component={ShopPage}/>
+            <Route path='/opinions' component={OpinionsPage}/>
+            <Route path='/comments' component={Comments}/>
+            <Route path='/style-guid' component={StyleGuid}/>
+            <Route exact path='/sign' render={() => user ? (<Redirect to='/'/>) : (<Sign/>)} />
+            <Route exact path='/checkout' component={Checkout}/>
+          </Suspense>
+        </ErrorBoundary>
       </Switch>
     </div>
     );

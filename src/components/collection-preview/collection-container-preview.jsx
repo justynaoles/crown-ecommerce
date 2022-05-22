@@ -13,7 +13,9 @@ const mapStateToProps = createStructuredSelector({
 //reading from right to left, shopovierview is passed to spinner
 // export const CollectionPreviewContainer = connect(mapStateToProps)(Spinner(ShopOverview));
 
-export const CollectionPreviewContainer = compose (
+const CollectionPreviewContainer = compose (
     connect(mapStateToProps),
     Spinner
 )(ShopOverview);
+
+export default CollectionPreviewContainer;

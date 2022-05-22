@@ -1,11 +1,13 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect,  lazy, Suspense } from 'react';
 import { Route } from 'react-router-dom';
 import './shop.styles.scss';
 import { connect } from 'react-redux';
 import {fetchCollectionsStart} from '../../redux/shop/shop.actions';
-import {CollectionPreviewContainer} from '../../components/collection-preview/collection-container-preview';
-import CategoryContainer from '../../components/category/category-container';
+import Loader from '../../components/loader/loader.component';
+
+const CollectionPreviewContainer = lazy(() => import('../../components/collection-preview/collection-container-preview'));
+const CategoryContainer = lazy(() => import('../../components/category/category-container'));
 
 const ShopPage = ({fetchCollectionsStart, match}) => {
 
@@ -17,8 +19,10 @@ const ShopPage = ({fetchCollectionsStart, match}) => {
 
     return (
         <div className='shop-page'>
-            <Route exact path={`${match.path}`} component={CollectionPreviewContainer}/>
-            <Route exact path={`${match.path}/:categoryId`} component={CategoryContainer}/>
+            <Suspense fallback={<Loader />}>
+                <Route exact path={`${match.path}`} component={CollectionPreviewContainer}/>
+                <Route exact path={`${match.path}/:categoryId`} component={CategoryContainer}/>
+            </Suspense>
         </div>
     )
     
